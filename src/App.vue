@@ -16,9 +16,10 @@ export default {
     if (userInfo && userInfo.token) {
       // 保存数据到store
       this.$store.commit('setToken', userInfo.token);
+      this.$store.commit('setModel', userInfo.isModel);
     } else {
       // 跳转到登录
-      this.$router.push('/home');
+      this.$router.push('/login');
     }
   },
 }

@@ -7,11 +7,16 @@ Vue.use(Vuex)
 const Global = {
     state: {
         token: null, // 用户身份
+        isModel: null, // 用户身份
     },
     mutations: {
         // 设定用户token
         setToken(state, data) {
             state.token = data
+        },
+        // 设定用户token
+        setModel(state, data) {
+            state.isModel = data
         },
     },
 

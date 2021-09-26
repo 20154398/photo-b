@@ -20,7 +20,7 @@ function resolve(dir) {
 console.log(process.env.VUE_APP_URL);
 
 module.exports = {
-    outputDir: path.resolve(__dirname, '../web'),
+    outputDir: 'web',
     assetsDir: '',
     //基本路径
     publicPath: '',

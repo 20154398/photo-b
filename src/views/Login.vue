@@ -12,13 +12,20 @@
                                   prefix-icon="el-icon-user"></el-input>
                     </el-form-item>
                 </div>
-<!--                <div class="m-b-50">-->
-<!--                    <el-form-item prop="passwordInput">-->
-<!--                        <el-input placeholder="请输入密码" maxlength="100" v-model="loginform.passwordInput" show-password-->
-<!--                                  prefix-icon="el-icon-lock"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                </div>-->
-                <el-button type="primary" @click="onSubmit('loginform')">登 录</el-button>
+                <div class="m-b-50">
+                    <el-form-item prop="passwordInput">
+                        <el-input placeholder="请输入密码" maxlength="100" v-model="loginform.passwordInput" show-password
+                                  prefix-icon="el-icon-lock"></el-input>
+                    </el-form-item>
+                </div>
+                <el-row>
+                    <el-col :span="10">
+                        <el-button type="primary" @click="onSubmit('loginform')">登 录</el-button>
+                    </el-col>
+                    <el-col :span="10" :offset="4">
+                        <el-button type="primary" @click="youke()">游 客 登 录</el-button>
+                    </el-col>
+                </el-row>
             </el-form>
             <p class="copyright"></p>
         </div>
@@ -59,8 +66,21 @@
             axiosLogin() {
                 return this.userAxios.post('user/login', {
                     phone: this.loginform.accountInput,
-                    password: this.commonJ.Encrypt("123")
+                    password: this.commonJ.Encrypt(this.loginform.passwordInput)
                 })
+            },
+
+            youke() {
+                this.$store.commit('setToken', "youke");
+                this.$store.commit('setModel', false);
+                this.loading = true;
+                // 储存用户信息到local
+                let userDate = JSON.stringify({
+                    token: "youke",
+                    isModel: false
+                });
+                this.commonJ.setLocalStorage('wisewalkId', userDate);
+                this.$router.push('/home');
             },
 
             // 提交登录
@@ -70,17 +90,19 @@
                         // 请求登录
                         this.axiosLogin().then((res) => {
                             if (res.data.code === 200) {
-                                this.$store.commit('setToken', res.data.data);
+                                this.$store.commit('setToken', res.data.data.phone);
+                                this.$store.commit('setModel', res.data.data.isModel);
                                 this.loading = true;
                                 // 储存用户信息到local
                                 let userDate = JSON.stringify({
-                                    token: res.data.data
+                                    token: res.data.data.phone,
+                                    isModel: res.data.data.isModel
                                 });
                                 this.commonJ.setLocalStorage('wisewalkId', userDate);
                                 // 跳转
-                                if (this.loginform.accountInput === 'admin'){
+                                if (this.loginform.accountInput === 'admin') {
                                     this.$router.push('/admin');
-                                }else {
+                                } else {
                                     this.$router.push('/home');
                                 }
                             }
