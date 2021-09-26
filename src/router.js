@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Login from './views/Login' // 登录页
 import home from './views/home'
+import test from "./views/test";
 
 
 Vue.use(Router);
@@ -18,6 +19,11 @@ const newRouter = new Router({
             path: '/Login',
             name: 'Login',
             component: Login
+        },
+        {
+            path: '/test',
+            name: 'test',
+            component: test
         },
         {
             path: '*',
