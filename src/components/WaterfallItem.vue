@@ -1,5 +1,5 @@
 <template>
-    <div class="waterfall-item" :style="styles"></div>
+    <li class="waterfall-item" :style="styles"></li>
 </template>
 
 <script>
@@ -38,11 +38,8 @@
 
 <style scoped>
     .waterfall-item {
-        position: relative;
         float: left;
         display: list-item;
-        width: 200px;
-        height: 100px;
         list-style-type: none;
     }
 </style>
